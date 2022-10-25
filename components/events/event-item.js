@@ -31,7 +31,6 @@ export default function EventItem(props) {
         </div>
         <div className={styles.actions}>
           <Button link={exploreLink}>
-            {" "}
             <span>Explore Event</span>{" "}
             <span className={styles.icon}>
               <ArrowRightIcon />
