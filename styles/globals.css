@@ -30,4 +30,5 @@ ul {
 .center {
   margin: auto;
   text-align: center;
+  font-weight: bold;
 }

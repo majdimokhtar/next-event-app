@@ -5,8 +5,7 @@ import DateIcon from "../icons/date-icon"
 import Button from "../ui/button"
 import styles from "./event-item.module.css"
 
-export default function EventItem(props) {
-  const { id, title, date, image, location } = props
+export default function EventItem({ id, title, date, image, location }) {
   const humanReadableDat = new Date(date).toLocaleDateString("fr-FR", {
     day: "numeric",
     month: "long",
@@ -14,6 +13,7 @@ export default function EventItem(props) {
   })
   const formattedAddress = location.replace(", ", "\n")
   const exploreLink = `/events/${id}`
+  console.log(exploreLink);
   return (
     <li className={styles.item}>
       <img src={"/" + image} alt={title} />
@@ -31,7 +31,7 @@ export default function EventItem(props) {
         </div>
         <div className={styles.actions}>
           <Button link={exploreLink}>
-            <span>Explore Event</span>{" "}
+            <span>Explore Event</span>
             <span className={styles.icon}>
               <ArrowRightIcon />
             </span>
