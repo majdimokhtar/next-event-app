@@ -3,10 +3,10 @@ import DateIcon from '../icons/date-icon';
 import LogisticsItem from './logistics-item';
 import classes from './event-logistics.module.css';
 
-function EventLogistics(props) {
-  const { date, location, image, imageAlt } = props;
+function EventLogistics({ date, location, image, imageAlt }) {
+  // const { date, location, image, imageAlt } = props;
 
-  const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
+  const humanReadableDate = new Date(date).toLocaleDateString('fr-FR', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
