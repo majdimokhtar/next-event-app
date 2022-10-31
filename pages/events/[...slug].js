@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import useSWR from "swr"
@@ -13,7 +14,9 @@ export default function FiltredEvents({ hasError, events, dating }) {
   const [loadedEvents, setLoadedEvents] = useState()
   const router = useRouter()
   const filtredData = router.query.slug
-  const { data, error } = useSWR(url,url=>fetch(url).then((res) => res.json()))
+  const { data, error } = useSWR(url, (url) =>
+    fetch(url).then((res) => res.json())
+  )
   useEffect(() => {
     if (data) {
       const events = []
@@ -24,23 +27,50 @@ export default function FiltredEvents({ hasError, events, dating }) {
     }
   }, [data])
 
+  let headDataPage = (
+    <Head>
+    <title>Filtred Event</title>
+    <meta
+      name="description"
+      content={`list of filtred events`}
+    />
+  </Head>
+  )
+
   if (!loadedEvents) {
-    return <p className="center">Loading....</p>
+    return (
+      <>
+        {headDataPage}
+        <p className="center">Loading....</p>{" "}
+      </>
+    )
   }
+
   const filtredYear = filtredData[0]
   const filtredMonth = filtredData[1]
   const numYear = +filtredYear
   const numMonth = +filtredMonth
+  headDataPage = (
+    <Head>
+      <title>Filtred Event</title>
+      <meta
+        name="description"
+        content={`All events for ${numMonth}/${numYear}.`}
+      />
+    </Head>
+  )
   if (
     isNaN(numYear) ||
     isNaN(numMonth) ||
     numYear > 2030 ||
     numYear < 2021 ||
     numMonth < 1 ||
-    numMonth > 12 || error
+    numMonth > 12 ||
+    error
   ) {
     return (
       <>
+        {headDataPage}
         <ErrorAlert>
           <p className="center">Invalid Filter please adjust your values</p>
         </ErrorAlert>
@@ -58,11 +88,12 @@ export default function FiltredEvents({ hasError, events, dating }) {
       eventDate.getMonth() === numMonth - 1
     )
   })
-
+  const date = new Date(numYear, numMonth - 1)
   // const filtredEvents = events
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
+        {headDataPage}
         <ErrorAlert>
           <p>Invalid filter. Please adjust your values!</p>
         </ErrorAlert>
@@ -72,8 +103,6 @@ export default function FiltredEvents({ hasError, events, dating }) {
       </>
     )
   }
-
-  const date = new Date(numYear, numMonth - 1)
 
   return (
     <>
